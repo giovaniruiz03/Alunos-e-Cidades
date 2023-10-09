@@ -1,0 +1,56 @@
+-- Criação das tabelas 
+create table tb_alunos(
+   id    int primary key,
+   nome  varchar(60), 
+   populacao int
+);
+
+create table tb_alunos(
+   id   int primary key, 
+   nome varchar(60),
+   data_nasc date,
+   cidade_id int
+);
+
+
+-- Inserir dados nas tabelas
+insert into tb_cidades values (1, 'Arraial dos Tucanos' , 42632);
+insert into tb_cidades values (2, 'Springfield' , 13820);
+insert into tb_cidades values (3, 'Hill Valley' , 27383);
+insert into tb_cidades values (4, 'Coruscant"' , 19138);
+insert into tb_cidades values (5, 'Minas Tirith"' , 31394);
+
+insert into tb_alunos values ( 1, 'Immanuel Kant' , '1724-04-22', 4);
+insert into tb_alunos values ( 2, 'Alan Turing' , '1912-06-23', 3);
+insert into tb_alunos values ( 3, 'George Boole' ,'2002-01-01', 1);
+insert into tb_alunos values ( 4, 'Lynn Margulis' , '1991-08-12', 3);
+insert into tb_alunos values ( 5, 'Nicola Tesla' , '2090-01-08', null);
+insert into tb_alunos values ( 6, 'Ada Lovelace' , '1978-05-28', 4);
+insert into tb_alunos values ( 7, 'Claude Shannon' , '1982-10-15', 3);
+insert into tb_alunos values ( 8, 'Charles Darwin' , '2010-02-06', null);
+insert into tb_alunos values ( 9, 'Marie Curie' , '2007-07-12', 3);
+insert into tb_alunos values (10, 'Carl Sagan' , '2000-11-20', 1);
+insert into tb_alunos values (11, 'Tim Berners-Lee' , '1973-12-05', 4);
+insert into tb_alunos values (12, 'Richard Feynman' , '1982-09-12', 1);
+
+-- Retorna apenas os registros que têm correspondências em ambas as tabelas
+select * from tb_alunos inner join tb_cidades on tb_cidades.id = tb_alunos.cidade_id;
+
+-- Retorna todos os registros da tabela à esquerda (tabela principal) e os registros correspondentes da tabela à direita (ou NULL se não houver correspondência)
+select * from tb_alunos left join tb_cidades on tb_cidades.id = tb_alunos.cidade_id;
+
+-- Retorna todos os registros da tabela à direita e os registros correspondentes da tabela à esquerda
+select * from tb_alunos right join tb_cidades on tb_cidades.id = tb_alunos.cidade_id;
+
+-- Nomeia as colunas da tabela para exibição
+select nome as "Nome" , data_nasc as "Data de Nascimento" from tb_alunos;
+
+-- Aliase com apelido 
+select a.id as "RA",
+       a.nome as "Nome",
+       a.data_nasc as "Data de Nascimento",
+       c.nome as "Cidade" 
+       
+   from tb_alunos  a left join 
+        tb_cidades c on a.cidade_id = c.id
+   where c.nome like "Hi%" and a.data_nasc > '2001-08-15' order by a.nome;
